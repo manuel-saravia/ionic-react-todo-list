@@ -1,0 +1,35 @@
+.centerButton {
+    display: flex;
+    justify-content: center;
+}
+
+.centerInput {
+    justify-content: center;
+}
+
+.floatButton {
+    float: right;
+}
+
+.gridPadding {
+    padding: 0;
+}
+
+.inputBorder {
+    border: none;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+
+.paddingLeftTodo {
+    padding-left: 10px;
+}
+
+.paddingRightDelete {
+    padding-right: 10px;
+}
+
+.subMaxWidth {
+    width: 70%;
+}
