@@ -12,7 +12,7 @@ interface Props {
 export const TasksList: FunctionComponent<Props> = ({ tasks, onDelete }) => (
   <ul className="paddingLeftTodo">
     {tasks.map(task => (
-      <TaskListItem task={task} onDelete={onDelete} />
+      <TaskListItem key={task.id} task={task} onDelete={onDelete} />
     ))}
   </ul>
 );

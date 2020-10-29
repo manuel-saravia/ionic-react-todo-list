@@ -20,7 +20,7 @@ export const TaskListItem: FunctionComponent<Props> = ({ task, onDelete }) => {
       <IonGrid>
         <IonRow>
           <IonCol>
-            {task.name}
+            {task.description}
           </IonCol>
           <IonCol>
             <IonIcon className="floatButton paddingRightDelete" name="close" onClick={onClick}/>

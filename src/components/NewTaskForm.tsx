@@ -15,7 +15,7 @@ export const NewTaskForm: FunctionComponent<Props> = ({ onChange, onAdd, task })
   <form onSubmit={onAdd}>
     <IonGrid className="gridPadding">
       <IonRow className="centerInput">
-        <input className="subMaxWidth inputBorder" placeholder="Enter new to-do here:" onChange={onChange} value={task.name}/>
+        <input className="subMaxWidth inputBorder" placeholder="Enter new to-do here:" onChange={onChange} value={task.description}/>
       </IonRow> <br/>
       <IonRow className="centerButton">
         <IonButton className="subMaxWidth" fill="outline" type="submit"> Confirm </IonButton>

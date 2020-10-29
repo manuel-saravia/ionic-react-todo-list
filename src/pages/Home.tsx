@@ -13,11 +13,50 @@ interface State {
   showInputPopover: boolean;
 }
 
+function sendAuthenticatedRequest(url: string, method: string, body?: any) {
+  const token = localStorage.getItem("token");
+  const headers = new Headers({
+    'Authorization': `Bearer ${token}`,
+    'content-type': 'application/json'
+  });
+  const options: RequestInit = {
+      method: method,
+      headers
+  };
+
+  if (!!body) {
+    options.body = JSON.stringify(body);
+  }
+  
+  return fetch(url, options);
+}
+
 export default class App extends React.Component<{}, State> {
+  componentDidMount() {
+    sendAuthenticatedRequest("https://api-nodejs-todolist.herokuapp.com/task", 'GET')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          const tasks = result.data.map((t: any) => {
+              return {
+              'id': t._id,
+              'description': t.description
+            }
+          });
+          this.setState({
+            tasks
+          });
+        },
+        (error) => {
+          console.log(`There was an error! Sadge. Here's the error ${error}`);
+        }
+      )
+  }
+
   state = {
     newTask: {
       id: 1,
-      name: ""
+      description: ""
     },
     
     tasks: [],
@@ -81,29 +120,48 @@ export default class App extends React.Component<{}, State> {
   private addTask = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    this.setState(previousState => ({
-      newTask: {
-        id: previousState.newTask.id + 1,
-        name: ""
-      },
-      tasks: [...previousState.tasks, previousState.newTask]
-    }));
+    const taskData = {
+      "description": this.state.newTask.description,
+    }
+    sendAuthenticatedRequest('https://api-nodejs-todolist.herokuapp.com/task', 'POST', taskData)
+      .then(res => res.json())
+      .then(res => {
+        this.setState(previousState => ({
+          newTask: {
+            id: previousState.newTask.id + 1,
+            description: ""
+          },
+          tasks: [...previousState.tasks, Object.assign(previousState.newTask, { id: res.data._id })]
+        }));
+        console.log(this.state.tasks);
+      });    
   };
 
   private handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       newTask: {
         ...this.state.newTask,
-        name: event.target.value
+        description: event.target.value
       }
     });
   };
 
   private deleteTask = (taskToDelete: Task) => {
-    this.setState(previousState => ({
-      tasks: [
-        ...previousState.tasks.filter(task => task.id !== taskToDelete.id)
-      ]
-    }));
+    const url = `https://api-nodejs-todolist.herokuapp.com/task/${taskToDelete.id}`;
+    sendAuthenticatedRequest(url, 'DELETE')
+      .then(res => {
+        if (!res.ok) {
+          throw(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
+        this.setState(previousState => ({
+          tasks: [
+            ...previousState.tasks.filter(task => task.id !== taskToDelete.id)
+          ]
+        }));
+      })
+      .catch(err => alert(err));
   };
 };
