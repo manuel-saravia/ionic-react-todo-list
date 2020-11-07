@@ -68,7 +68,7 @@ export default class Login extends Component<{}, LoginState> {
     return (
       <IonContent>
         <form onSubmit={this.handleSubmit}>
-          <IonGrid className="gridPadding">
+          <IonGrid>
             <IonCol size="2">
               <IonRow className="centerInput">
                 <input className="subMaxWidth inputBorder" name="email" placeholder="Email:" onChange={this.handleChange}/>
