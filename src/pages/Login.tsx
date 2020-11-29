@@ -68,7 +68,7 @@ export default class Login extends Component<{}, LoginState> {
     return (
       <IonContent>
         <form onSubmit={this.handleSubmit}>
-          <IonGrid>
+          <IonGrid className="gridCenter" fixed={true}>
             <IonCol size="2">
               <IonRow className="centerInput">
                 <input className="subMaxWidth inputBorder" name="email" placeholder="Email:" onChange={this.handleChange}/>
@@ -76,11 +76,9 @@ export default class Login extends Component<{}, LoginState> {
               <IonRow className="centerInput">
                 <input className="subMaxWidth inputBorder" name="password" placeholder="Password:" onChange={this.handleChange}/>
               </IonRow> <br/>
-              <IonRow className="link">
+              <IonRow className="alignCenter">
                 <Link to="/register"> Register </Link>
-              </IonRow>
-              <IonRow className="floatButton">
-                <IonButton className="subMaxWidth" fill="outline" type="submit"> Log In </IonButton>
+                <IonButton className="floatButton" fill="outline" type="submit"> Log In </IonButton>
               </IonRow>
             </IonCol>
           </IonGrid>

@@ -33,3 +33,19 @@
 .subMaxWidth {
     width: 70%;
 }
+
+.gridCenter {
+    --ion-grid-width: 40%;
+    --ion-grid-width-md: 60%;
+    --ion-grid-width-sm: 80%;
+    --ion-grid-width-xs: 100%;
+    padding-top: 10%;
+}
+
+.alignCenter {
+    justify-content: space-around;
+}
+
+.alignCenter .floatButton {
+    width: 20%;
+}
